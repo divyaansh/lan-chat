@@ -1,0 +1,293 @@
+SQL> create table xteachers2(tcode char(3),tname char(25), stream char(15),basic number(8,2),doj dat
+e);
+
+Table created.
+
+SQL> 
+SQL> insert into xteachers2 values('101','ananya murty','science',18000,'23-jan-1990');
+
+1 row created.
+
+SQL> insert into xteachers2 values('202','kirti khaneja','humanities',28000,'12-dec-1978');
+
+1 row created.
+
+SQL> insert into xteachers2 values('103','adil mehra','science',8000,'14-feb-2001');
+
+1 row created.
+
+SQL> insert into xteachers2 values('305','nishiya goel','commerce',12000,'01-jan-1997');
+
+1 row created.
+
+SQL> insert into xteachers2 values('203','shubh pandit','humanities',22000,'19-mar-1985');
+
+1 row created.
+
+SQL> insert into xteachers2 values('109','naina','science',20000,'17-jul-1994');
+
+1 row created.
+
+SQL> create table students2(scode number(3),name char(25),tcode number(3), agg number(5,1));
+
+Table created.
+
+SQL> insert into students2 values(2,'nabi ahmad',101,91);
+
+1 row created.
+
+SQL> insert into students2 values(1,'ravi sahai',305,84);
+
+1 row created.
+ 
+SQL> insert into students2 values(5,'vibhuti',203,67);
+
+1 row created.
+
+SQL> insert into students2 values(4,'nazneen',103,89);
+
+1 row created.
+
+SQL> insert into students2 values(3,'aryana',202,37);
+
+1 row created.
+
+SQL> insert into students2 values(6,'jonathan',305,45);
+
+1 row created.
+
+SQL> select * from xteachers2;
+
+TCODE  	TNAME                     STREAM 	   	BASIC     DOJ
+------ ------------------------- --------------- 	--------- ---------
+101 	ananya murty	science             	18000     23-JAN-90
+202	kirti khaneja   	humanities          	28000     12-DEC-78
+103 	adil mehra     	science              	8000       14-FEB-01
+305 	nishiya goel           	commerce            	12000     01-JAN-97
+203 	shubh pandit         	humanities          	22000     19-MAR-85
+109 	naina                     	science             	20000     17-JUL-94
+
+6 rows selected.
+
+SQL> select * from xteachers2 where doj between '01-jan-1978' and '30-nov-1992';
+
+TCODE TNAME                     STREAM            BASIC     DOJ
+-----      ---------------------    ---------------       ---------   ---------
+101      ananya murty          science             18000      23-JAN-90
+202      kirti khaneja             humanities         28000      12-DEC-78
+203      shubh pandit           humanities         22000      19-MAR-85
+
+SQL> select * from students2 order by agg desc;
+
+SCODE	 NAME                      TCODE   AGG
+--------- ------------------------- --------- ---------
+        2 	nabi ahmad                  101        91
+        4 	nazneen                      103        89
+        1 	ravi sahai                    305        84
+        5 	vibhuti                         203        67
+        6 	jonathan                      305        45
+        3 	aryana                        202        37
+
+6 rows selected.
+
+SQL> select name, scode from students2 where tcode in(101,203);
+
+NAME                          SCODE
+------------------------- ---------
+nabi ahmad                        2
+vibhuti	                           5
+
+SQL> select (0.25*basic) as "Income Tax", tcode , tname, stream from xteachers2;
+
+Income Tax     TCODE    TNAME                     STREAM
+------------- ------------   -------------         ---------------
+      4500         101          ananya murty          science
+      7000         202          kirti khaneja             humanities
+      2000         103         adil mehra                science
+      3000         305         nishiya goel             commerce
+      5500         203         shubh pandit           humanities
+      5000         109         naina                        science
+
+6 rows selected.
+
+SQL> update students2 set agg=82 where name='ravi sahai';
+
+1 row updated.
+
+SQL> select * from students2;
+
+SCODE NAME                          TCODE  AGG
+--------- ------------------------- --------- ---------
+        2 nabi ahmad                    101        91
+        4 nazneen                        103        89
+        1 ravi sahai                      305        82
+        5 vibhuti                           203        67
+        6 jonathan                        305        45
+        3 aryana                          202        37
+
+
+SQL> delete from students2 where agg<40;
+
+1 row deleted.
+
+SQL> select * from students2;
+
+SCODE NAME                          TCODE  AGG
+--------- ------------------------- --------- ---------
+        2 nabi ahmad                    101        91
+        4 nazneen                        103        89
+        1 ravi sahai                      305        82
+        5 vibhuti                           203        67
+        6 jonathan                        305        45
+        
+SQL> update xteachers2 set stream='humanities' where tname='ananya murty';
+
+1 row updated.
+
+SQL> update xteachers2 set tcode='210' where tname='ananya murty';
+
+1 row updated.
+
+SQL> select * from xteachers2;
+
+TCODE  	TNAME                     STREAM 	   	BASIC     DOJ
+------ ------------------------- --------------- 	--------- ---------
+210 	ananya murty	humanities           	18000     23-JAN-90
+202	kirti khaneja   	humanities          	28000     12-DEC-78
+103 	adil mehra     	science              	8000       14-FEB-01
+305 	nishiya goel           	commerce            	12000     01-JAN-97
+203 	shubh pandit         	humanities          	22000     19-MAR-85
+109 	naina                     	science             	20000     17-JUL-94
+
+SQL> alter table students2 add(Grade char);
+
+Table altered.
+
+SQL> update students2 set grade = 'A' where agg>=70;
+
+3 rows updated.
+
+SQL> update students2 set grade = 'B' where agg between 40 and 70;
+
+2 rows updated.
+
+SQL> update students2 set grade = 'C' where agg<=40;
+
+0 rows updated.
+
+SQL> select * from students2;
+
+SCODE NAME                          TCODE  AGG   GRADE
+--------- ------------------------- --------- ------- -----------
+        2 nabi ahmad                    101        91	A
+        4 nazneen                        103        89	A
+        1 ravi sahai                      305        82	A
+        5 vibhuti                           203        67	B
+        6 jonathan                        305        45	B
+       
+SQL> select tcode, tname from xteachers2 where stream = 'humanities' order by tcode;
+
+TCODE TNAME
+---       -----------------
+101      ananya murty
+202      kirti khaneja
+203      shubh pandit
+
+SQL> select tname, stream, doj from xteachers2 order by stream, doj desc;
+
+TNAME                     STREAM          DOJ
+------------------------- --------------- ---------
+nishiya goel             commerce      01-JAN-97
+ananya murty          humanities     23-JAN-90
+shubh pandit           humanities     19-MAR-85
+kirti khaneja             humanities     12-DEC-78
+adil mehra               science         14-FEB-01
+naina                       science         17-JUL-94
+
+6 rows selected.
+
+SQL> select max(basic), stream from xteachers2 group by stream;
+
+MAX(BASIC)             STREAM
+---------- 		---------------
+     12000 	 commerce
+     28000		 humanities
+     20000		 science
+
+SQL> select sum(basic), avg(basic) from xteachers2;
+
+SUM(BASIC) 	AVG(BASIC)
+---------- 		----------
+    108000     	 18000
+
+SQL> select tcode, min(agg) from students2 group by tcode having tcode>200;
+
+ TCODE     MIN(AGG)
+---------       ---------
+      203        67
+      305        45
+
+SQL> select count(*) from xteachers2;
+
+ COUNT(*)
+---------
+        6
+
+SQL> select avg(agg), tcode from students2 group by tcode;
+
+ AVG(AGG)     TCODE
+---------            ---------
+       91             101
+       89             103
+       67             203
+     63.5            305
+
+SQL> select count(*), stream from xteachers2 group by stream;
+
+ COUNT(*)     STREAM
+---------       ---------------
+        1          commerce
+        3          humanities
+        2          science
+
+SQL> select distinct stream from xteachers2; 
+
+STREAM
+---------------
+commerce
+humanities
+science
+
+SQL> update xteachers2 set basic = (basic+1000) where doj<'01-feb-1995';
+
+4 rows updated.
+
+SQL> select * from xteachers2;
+
+TCODE TNAME                   STREAM        BASIC    DOJ
+---       ---------------------- ---------------    --------- ---------
+101      ananya murty         humanities     19000    23-JAN-90
+202     kirti khaneja             humanities     29000    12-DEC-78
+103     adil mehra               science          8000      14-FEB-01
+305     nishiya goel            commerce      12000     01-JAN-97
+203     shubh pandit           humanities     23000     19-MAR-85
+109     naina                       science         21000      17-JUL-94
+
+6 rows selected.
+
+SQL> select min(basic), stream from xteachers2 group by stream having count(*) >=2;
+
+MIN(BASIC) STREAM
+---------- ---------------
+     19000 humanities
+      8000 science
+
+SQL> select S.name, T.tname from xteachers2 T, students2 S where T.tcode = S.tcode;
+
+NAME                      TNAME
+------------------------- -------------------------
+nabi ahmad              ananya murty
+nazneen                  adil mehra
+vibhuti                     shubh pandit
+ravi sahai                nishiya goel
+jonathan                  nishiya goel

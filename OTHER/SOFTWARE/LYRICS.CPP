@@ -1,0 +1,41 @@
+#include<fstream.h>
+#include<conio.h>
+#include<dos.h>
+
+void main()
+{
+ clrscr();
+ fstream fil,fil1;
+ fil1.open("TEXT\\lyrics.txt",ios::in);
+
+ fil.open("TEXT\\lyrics.txt",ios::in);
+ char Lin[80];int i=0;
+ while(fil.getline(Lin,80))
+ {
+  if(i)
+  {
+   i--;
+   clreol();
+   for(int j=0;Lin[j]!='\0';j++)
+   {
+    cout<<Lin[j];
+    delay(50);
+   }
+   cout<<endl;
+  }
+  else
+  {
+   i++;
+   gotoxy(1,1);
+   clreol();
+   for(int j=0;Lin[j]!='\0';j++)
+   {
+    cout<<Lin[j];
+    delay(50);
+   }
+   cout<<endl;
+  }
+  getch();
+ }
+ getch();
+}
